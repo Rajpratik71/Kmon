@@ -1,4 +1,4 @@
-FROM harbor.dds-sysu.tech/ebpf_env/ebpf_env:latest as builder
+FROM ghcr.io/iovisor/bcc:ubuntu-20.04 as builder
 WORKDIR /build
 COPY deployment ./deployment
 RUN bash ./deployment/script/install_go.sh
@@ -7,7 +7,7 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 RUN make
 
 
-FROM harbor.dds-sysu.tech/ebpf_env/ebpf_env:latest
+FROM ghcr.io/iovisor/bcc:ubuntu-20.04
 WORKDIR ./ebpf
 COPY --from=builder /build/release .
 RUN ls
